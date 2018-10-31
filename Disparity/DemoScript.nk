@@ -1,0 +1,109 @@
+#! C:/Program Files/Nuke11.2v4/nuke-11.2.4.dll -nx
+version 11.2 v4
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1904" h="1001" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1241" stretch="1"/>
+            <splitter orientation="2">
+                <split size="559"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="394"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/samue/Documents/Projects/Nuke/DisparityPlugin/DemoScript.nk
+ last_frame 50
+ lock_range true
+ format "2992 2000 0 0 2992 2000 1 "
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+ views "left #ff0000
+right #00ff00"
+}
+Ramp {
+ inputs 0
+ output {rgba.red rgba.green -rgba.blue -rgba.alpha}
+ p0 {1905 615}
+ p1 {1905 0}
+ color 20
+ name GroundRamp
+ xpos -28
+ ypos -33
+}
+Ramp {
+ inputs 0
+ output {rgba.red rgba.green -rgba.blue -rgba.alpha}
+ p0 {1600 615}
+ p1 {1600 1550}
+ color 15
+ name SkyRamp
+ xpos 66
+ ypos -34
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos 7
+ ypos 23
+}
+Read {
+ inputs 0
+ file_type jpeg
+ file ./Skyline.JPG
+ format "2992 2000 0 0 2992 2000 1 "
+ origset true
+ name Read2
+ xpos -217
+ ypos -118
+}
+DisparityPlugin {
+ inputs 2
+ name DisparityPlugin1
+ xpos -217
+ ypos 17
+}
+set Nc3836e00 [stack 0]
+Anaglyph {
+ views {left right}
+ name Anaglyph1
+ xpos -217
+ ypos 74
+}
+push $Nc3836e00
+Viewer {
+ inputs 2
+ frame 1
+ frame_range 1-50
+ colour_sample_bbox {0.9665766982 0.1990883653 1.000000832 0.2120078947}
+ name Viewer1
+ xpos -52
+ ypos 144
+}
